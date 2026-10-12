@@ -1,1 +1,22 @@
-[]
+[
+ {
+  "issue": 1,
+  "user": "franchg",
+  "url": "https://github.com/DSIP-FBK/forecast-in-a-pocket-benchmarks/issues/1",
+  "device": "motorola motorola edge 40 pro",
+  "soc": "sm8550",
+  "android": "16",
+  "app_version": "0.2-1614bd0",
+  "family": "single",
+  "steps": 12,
+  "sps": 36.5,
+  "minutes": 4.3,
+  "npu_max": 74,
+  "source": "Shipped case",
+  "hash": "85e675065a561f4585647ea80bb689dbe7d2cdd54873f524e0f0024891010328",
+  "resumes": 1,
+  "run_at": "2026-10-12T20:24Z",
+  "verdict": "verified",
+  "updated": "2026-10-12T20:41Z"
+ }
+]
