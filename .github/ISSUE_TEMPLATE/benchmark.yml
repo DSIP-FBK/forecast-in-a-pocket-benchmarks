@@ -1,0 +1,94 @@
+name: Benchmark
+description: A forecast your phone computed with Forecast in a Pocket. The app prefills this form; just check it and press Submit.
+title: "<device>: AIFS-<model> <seconds> s/step"
+labels: [benchmark]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks! Everything below was filled in by the app from the run it just finished. Nothing was sent before you pressed Submit.
+        The verification hash lets the leaderboard check that the numbers come from a real run of the model on your chip.
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      placeholder: motorola edge 40 pro
+    validations:
+      required: true
+  - type: input
+    id: soc
+    attributes:
+      label: SoC
+      description: Qualcomm chip id (Build.SOC_MODEL)
+      placeholder: SM8550
+    validations:
+      required: true
+  - type: input
+    id: android
+    attributes:
+      label: Android
+      placeholder: "16"
+  - type: input
+    id: app_version
+    attributes:
+      label: App version
+      placeholder: 0.2-1614bd0
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      description: AIFS-single or AIFS-ENS
+      placeholder: AIFS-single
+    validations:
+      required: true
+  - type: input
+    id: steps
+    attributes:
+      label: Steps (6 h each)
+      placeholder: "40"
+    validations:
+      required: true
+  - type: input
+    id: seconds_per_step
+    attributes:
+      label: Seconds per step
+      description: the run's average, as the app measured it
+      placeholder: "32.6"
+    validations:
+      required: true
+  - type: input
+    id: total_minutes
+    attributes:
+      label: Total minutes
+      placeholder: "24.8"
+  - type: input
+    id: npu_max
+    attributes:
+      label: NPU max °C
+      placeholder: "95"
+  - type: input
+    id: source
+    attributes:
+      label: Initial conditions
+      description: "Shipped case" (the benchmark case every phone runs) or "Latest ECMWF analysis (date)"
+      placeholder: Shipped case
+  - type: input
+    id: hash_2t
+    attributes:
+      label: Verification hash
+      description: sha256 of the step-1 2t column, computed by the app. Leave it as it is.
+  - type: input
+    id: resumes
+    attributes:
+      label: Restarts
+      description: how many times the run resumed from a checkpoint (0 normally)
+      placeholder: "0"
+  - type: input
+    id: run_at
+    attributes:
+      label: Run finished at (UTC)
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: optional - what else was the phone doing, was it hot, was it on battery

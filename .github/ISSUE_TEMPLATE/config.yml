@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: About the project
+    url: https://github.com/DSIP-FBK/forecast-in-a-pocket-benchmarks#readme
+    about: What Forecast in a Pocket is and how the leaderboard verifies a run

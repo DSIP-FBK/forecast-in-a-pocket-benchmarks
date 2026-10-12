@@ -1,0 +1,8 @@
+{
+ "_doc": "sha256 of the step-1 2t column (cols/col16_0_5.bin, fp16, 542080 values) of the SHIPPED case (ECMWF analysis 2026-08-28T00) per family and SoC; outputs are bit-reproducible per HTP generation, so a matching hash proves the run",
+ "single": {
+  "sm8550": "85e675065a561f4585647ea80bb689dbe7d2cdd54873f524e0f0024891010328",
+  "sm8750": ""
+ },
+ "ens": {}
+}

@@ -1,0 +1,45 @@
+name: Crash report
+description: The app crashed. It prefills this form with the trace and the last log lines; attach the full log if you can.
+title: "Crash on <device>: <exception>"
+labels: [crash]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. The trace and the last log lines come from the app's own log; the full log (FBK logo → Share log)
+        can be attached here by drag-and-drop or with the file button. Check the text for anything you would rather not share.
+  - type: input
+    id: device
+    attributes:
+      label: Device
+    validations:
+      required: true
+  - type: input
+    id: soc
+    attributes:
+      label: SoC
+  - type: input
+    id: android
+    attributes:
+      label: Android
+  - type: input
+    id: app_version
+    attributes:
+      label: App version
+  - type: textarea
+    id: trace
+    attributes:
+      label: Crash trace
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Last log lines
+      render: text
+  - type: textarea
+    id: notes
+    attributes:
+      label: What were you doing?
+      description: optional - which screen, which model, how far the run was

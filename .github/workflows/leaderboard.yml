@@ -1,0 +1,40 @@
+name: leaderboard
+# Every benchmark issue (opened or edited) is parsed, verified against data/known_hashes.json, stored in
+# data/benchmarks.json and rendered into the README table; the issue gets a verdict comment and a label.
+on:
+  issues:
+    types: [opened, edited]
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: leaderboard
+  cancel-in-progress: false
+jobs:
+  update:
+    if: contains(github.event.issue.labels.*.name, 'benchmark')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Parse, verify, store, render
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_USER: ${{ github.event.issue.user.login }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: python3 scripts/leaderboard.py
+      - name: Commit the leaderboard
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/benchmarks.json README.md
+          git diff --cached --quiet || (git commit -m "leaderboard: issue #${{ github.event.issue.number }}" && git push)
+      - name: Verdict on the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} --body-file verdict.md
+          gh issue edit ${{ github.event.issue.number }} --remove-label verified,unverified,new-chip,invalid 2>/dev/null || true
+          gh issue edit ${{ github.event.issue.number }} --add-label "$(cat verdict.label)"
