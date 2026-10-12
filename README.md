@@ -36,6 +36,7 @@ Seconds per 6-hour step, fastest first. One step = the whole model: encoder, 16 
 | # | device | SoC | s/step | steps | total min | NPU max | initial conditions | app | status | by |
 |--:|---|---|--:|--:|--:|--:|---|---|---|---|
 | 1 | motorola motorola edge 40 pro | sm8550 | 36.5 | 12 | 4 | 74 °C | Shipped case | 0.2-1614bd0 | ✓ verified | [@franchg](https://github.com/DSIP-FBK/forecast-in-a-pocket-benchmarks/issues/1) |
+| 2 | motorola motorola edge 40 pro | sm8550 | 36.5 | 2 | 1 | 72 °C | Shipped case | 0.2-1614bd0 | ✓ verified | [@franchg](https://github.com/DSIP-FBK/forecast-in-a-pocket-benchmarks/issues/2) |
 
 ### AIFS-ENS (one member)
 
