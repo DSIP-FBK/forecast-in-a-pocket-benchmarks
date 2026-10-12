@@ -1,4 +1,4 @@
-blank_issues_enabled: false
+blank_issues_enabled: true   # the app submits a prefilled plain issue (title + body): form-field prefill does not work on GitHub's new issue page
 contact_links:
   - name: About the project
     url: https://github.com/DSIP-FBK/forecast-in-a-pocket-benchmarks#readme

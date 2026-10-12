@@ -12,29 +12,39 @@ concurrency:
   cancel-in-progress: false
 jobs:
   update:
-    if: contains(github.event.issue.labels.*.name, 'benchmark')
+    # every issue: the app's submissions arrive as plain issues (title + body in the form's layout) without labels -
+    # a label on issues/new needs write access - so the script decides by content and labels them itself
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
       - name: Parse, verify, store, render
+        id: parse
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_USER: ${{ github.event.issue.user.login }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: python3 scripts/leaderboard.py
+      - name: Label a crash report
+        if: steps.parse.outputs.kind == 'crash'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue edit ${{ github.event.issue.number }} --add-label crash
       - name: Commit the leaderboard
+        if: steps.parse.outputs.kind == 'benchmark'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/benchmarks.json README.md
           git diff --cached --quiet || (git commit -m "leaderboard: issue #${{ github.event.issue.number }}" && git push)
       - name: Verdict on the issue
+        if: steps.parse.outputs.kind == 'benchmark'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          gh issue edit ${{ github.event.issue.number }} --add-label benchmark
           gh issue comment ${{ github.event.issue.number }} --body-file verdict.md
           gh issue edit ${{ github.event.issue.number }} --remove-label verified,unverified,new-chip,invalid 2>/dev/null || true
           gh issue edit ${{ github.event.issue.number }} --add-label "$(cat verdict.label)"

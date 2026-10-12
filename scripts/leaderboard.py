@@ -44,6 +44,13 @@ def main():
     n = int(os.environ["ISSUE_NUMBER"]); body = os.environ.get("ISSUE_BODY", ""); user = os.environ.get("ISSUE_USER", "")
     url = os.environ.get("ISSUE_URL", "")
     f = parse(body)
+    out = os.environ.get("GITHUB_OUTPUT")
+    kind = "benchmark" if "hash" in f or "sps" in f else ("crash" if "### Crash trace" in body else "other")
+    if out:
+        open(out, "a").write(f"kind={kind}\n")
+    if kind != "benchmark":
+        print(f"issue #{n}: {kind}, nothing to do for the leaderboard")
+        return 0
     known = json.load(open("data/known_hashes.json"))
     family = "ens" if "ens" in f.get("model", "").lower() else "single"
     soc = f.get("soc", "").strip().lower()
